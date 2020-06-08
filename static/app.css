@@ -40,7 +40,7 @@ a.button, input.button {
   box-shadow: 5px 5px 5px #999999;
 }
 a.button:hover {
-  background-color: black;
+  background-color: red;
   color: white;
 }
 input {

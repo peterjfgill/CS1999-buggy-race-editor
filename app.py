@@ -22,8 +22,13 @@ def home():
 #------------------------------------------------------------
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
+  con = sql.connect(DATABASE_FILE)
+  con.row_factory = sql.Row
+  cur = con.cursor()
+  cur.execute("SELECT * FROM buggies")
+  record = cur.fetchone();
   if request.method == 'GET':
-    return render_template("buggy-form.html")
+    return render_template("buggy-form.html", buggy = record)
   elif request.method == 'POST':
     msg=""
     error = False
@@ -97,7 +102,7 @@ def create_buggy():
     algo = (request.form['algo']).strip("")
     
     if error == True:
-      return render_template("buggy-form.html", msg = msg)
+      return render_template("buggy-form.html", msg = msg, buggy = record)
 
     try:          
 
@@ -131,7 +136,7 @@ def create_buggy():
       msg = "error in update operation"
     finally:
       con.close()
-      return render_template("updated.html", msg = msg)
+      return render_template("updated.html", msg = msg, buggy = record)
 
 #------------------------------------------------------------
 # a page for displaying the buggy

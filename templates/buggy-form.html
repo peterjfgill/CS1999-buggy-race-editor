@@ -10,6 +10,7 @@
       p {display:table-row;}
       label {display:table-cell}
       input {display:table-cell}
+      select {display:table-cell}
       h1 {text-align:center;}
     </style>
   </head>
@@ -21,79 +22,83 @@
   <form action="/new" method="post">
       <p>
         <label for="qty_wheels">Number of wheels:</label>
-        <input type="text" name="qty_wheels" />
+        <input type="text" name="qty_wheels" value = "{{buggy ['qty_wheels']}}"/>
        </p>
       <p>
         <label for="flag_color">Flag color:</label>
-        <input type="text" name="flag_color" />
+        <input type="text" name="flag_color" value = "{{buggy ['flag_color']}}"/>
        </p>
       <p>
         <label for="flag_color_secondary">Secondary flag color:</label>
-        <input type="text" name="flag_color_secondary" />
+        <input type="text" name="flag_color_secondary" value = "{{buggy ['flag_color_secondary']}}"/>
+        <select>
+        <option>plain</option>
+        <option>
+        </select>
        </p>
       <p>  
         <label for="flag_pattern">Flag pattern:</label>
-        <input type="text" name="flag_pattern" />
+        <input type="text" name="flag_pattern" value = "{{buggy ['flag_pattern']}}"/>
        </p>
       <p>  
         <label for="power_type">Primary motive power:</label>
-        <input type="text" name="power_type" />
+        <input type="text" name="power_type" value = "{{buggy ['power_type']}}"/>
        </p>
       <p>  
         <label for="power_unit">Primary motive power units:</label>
-        <input type="text" name="power_units" />
+        <input type="text" name="power_units" value = "{{buggy ['power_units']}}"/>
        </p>
       <p>
         <label for="aux_power_type">Auxiliary motive power:</label>
-        <input type="text" name="aux_power_type"/>
+        <input type="text" name="aux_power_type" value = "{{buggy ['aux_power_type']}}"/>
        </p>
       <p>
         <label for="aux_power_unit">Auxiliary motive power units:</label>
-        <input type="text" name="aux_power_units"/>
+        <input type="text" name="aux_power_units" value = "{{buggy ['aux_power_units']}}"/>
        </p>
       <p>
         <label for="hamster_booster">Hamster booster:</label>
-        <input type="text" name="hamster_booster"/>
+        <input type="text" name="hamster_booster" value = "{{buggy ['hamster_booster']}}"/>
        </p>
       <p>
         <label for="tyres">Type of tyres:</label>
-        <input type="text" name="tyres"/>
+        <input type="text" name="tyres" value = "{{buggy ['tyres']}}"/>
        </p>
       <p>
         <label for="qty_tyres">Number of tyres:</label>
-        <input type="text" name="qty_tyres"/>
+        <input type="text" name="qty_tyres" value = "{{buggy ['qty_tyres']}}"/>
        </p>
       <p>
         <label for="armour">Armour:</label>
-        <input type="text" name="armour"/>
+        <input type="text" name="armour" value = "{{buggy ['armour']}}"/>
        </p>
       <p>
         <label for="attack">Offensive capability:</label>
-        <input type="text" name="attack"/>
+        <input type="text" name="attack" value = "{{buggy ['attack']}}"/>
        </p>
       <p>
         <label for="qty_attacks">Number of attacks:</label>
-        <input type="text" name="qty_attacks"/>
+        <input type="text" name="qty_attacks" value = "{{buggy ['qty_attacks']}}"/>
        </p>
       <p>
         <label for="fireproof">Fireproof?:</label>
-        <input type="text" name="fireproof"/>
+        <input type="text" name="fireproof" value = "{{buggy ['fireproof']}}"/>
        </p>
       <p>
         <label for="insulated">Insulated?:</label>
-        <input type="text" name="insulated"/>
+        <input type="text" name="insulated" value = "{{buggy ['insulated']}}"/>
        </p>
       <p>
         <label for="antibiotic">Antibiotic?:</label>
-        <input type="text" name="antibiotic"/>
+        <input type="text" name="antibiotic" value = "{{buggy ['antibiotic']}}"/>
        </p>
       <p>
         <label for="banging">Banging sound system?:</label>
-        <input type="text" name="banging"/>
+        <input type="text" name="banging" value = "{{buggy ['banging']}}"/>
        </p>
       <p>
         <label for="algo">Race computer algorithm:</label>
-        <input type="text" name="algo"/>
+        <input type="text" name="algo" value = "{{buggy ['algo']}}"/>
        </p>
       <input type="submit" class="button">
   </form>
