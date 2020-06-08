@@ -32,11 +32,15 @@ def create_buggy():
       flag_color_secondary = request.form['flag_color_secondary']
       flag_pattern = request.form['flag_pattern']
       power_type = request.form['power_type']
-      power_unit = request.form['power_unit']
-      power_aux = request.form['power_aux']
-      power_aux_unit = request.form['power_aux_unit']
+      power_units = request.form['power_units']
+      aux_power_type = request.form['aux_power_type']
+      aux_power_units = request.form['aux_power_units']
       hamster_booster = request.form['hamster_booster']
-      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_unit={power_unit}, power_aux={power_aux}, power_aux_unit={power_aux_unit}, hamster_booster={hamster_booster}"
+      tyres = request.form['tyres']
+      qty_tyres = request.form['qty_tyres']
+
+      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}"
+
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
         cur.execute("UPDATE buggies set qty_wheels=? WHERE id=?", (qty_wheels, DEFAULT_BUGGY_ID))
@@ -44,10 +48,12 @@ def create_buggy():
         cur.execute("UPDATE buggies set flag_color_secondary=? WHERE id=?", (flag_color_secondary, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set flag_pattern=? WHERE id=?", (flag_pattern, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set power_type=? WHERE id=?", (power_type, DEFAULT_BUGGY_ID))
-        cur.execute("UPDATE buggies set power_unit=? WHERE id=?", (power_unit, DEFAULT_BUGGY_ID))
-        cur.execute("UPDATE buggies set power_aux=? WHERE id=?", (power_aux, DEFAULT_BUGGY_ID))
-        cur.execute("UPDATE buggies set power_aux_unit=? WHERE id=?", (power_aux_unit, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set power_units=? WHERE id=?", (power_units, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set aux_power_type=? WHERE id=?", (aux_power_type, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set aux_power_units=? WHERE id=?", (aux_power_units, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set hamster_booster=? WHERE id=?", (hamster_booster, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set tyres=? WHERE id=?", (tyres, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set qty_tyres=? WHERE id=?", (qty_tyres, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except:
