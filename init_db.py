@@ -40,10 +40,10 @@ con.execute("""
     armour                VARCHAR(20) DEFAULT "none",
     attack                VARCHAR(20) DEFAULT "none",
     qty_attacks           INTEGER DEFAULT 0,
-    fireproof             BOOL DEFAULT False,
-    insulated             BOOl DEFAULT False,
-    antibiotic            BOOL DEFAULT False,
-    banging               BOOL DEFAULT False,
+    fireproof             VARCHAR(5) DEFAULT "false",
+    insulated             VARCHAR(5) DEFAULT "false",
+    antibiotic            VARCHAR(5) DEFAULT "false",
+    banging               VARCHAR(5) DEFAULT "false",
     algo                  VARCHAR(20) DEFAULT "steady"
   )
 

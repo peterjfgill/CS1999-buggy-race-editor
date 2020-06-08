@@ -26,28 +26,82 @@ def create_buggy():
     return render_template("buggy-form.html")
   elif request.method == 'POST':
     msg=""
-    try:
-      qty_wheels = request.form['qty_wheels']
-      flag_color = request.form['flag_color']
-      flag_color_secondary = request.form['flag_color_secondary']
-      flag_pattern = request.form['flag_pattern']
-      power_type = request.form['power_type']
-      power_units = request.form['power_units']
-      aux_power_type = request.form['aux_power_type']
-      aux_power_units = request.form['aux_power_units']
-      hamster_booster = request.form['hamster_booster']
-      tyres = request.form['tyres']
-      qty_tyres = request.form['qty_tyres']
-      armour = request.form['armour']
-      attack = request.form['attack']
-      qty_attack = request.form['qty_attack']
-      fireproof = request.form['fireproof']
-      insulated = request.form['insulated']
-      antibiotic = request.form['antibiotic']
-      banging = request.form['banging']
-      algo = request.form['algo']
+    error = False
 
-      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}, armour={armour}, attack={attack}, qty_attack={qty_attack}, fireproof={fireproof}, insulated={insulated}, antibiotic={antibiotic}, banging={banging}, algo={algo}"
+    qty_wheels = request.form['qty_wheels']
+    if not qty_wheels.isdigit():
+      msg += f"{qty_wheels} is not a valid input for the number of wheels.\n"
+      error = True
+    
+    flag_color = (request.form['flag_color']).strip("")
+
+    flag_color_secondary = (request.form['flag_color_secondary']).strip("")
+
+    flag_pattern = (request.form['flag_pattern']).strip("")
+
+    power_type = (request.form['power_type']).strip("")
+
+    power_units = request.form['power_units']
+    if not power_units.isdigit():
+      msg += f"{power_units} is not a valid input for the primary motive power units.\n "
+      error = True
+
+    aux_power_type = (request.form['aux_power_type']).strip("")
+
+    aux_power_units = request.form['aux_power_units']
+    if not aux_power_units.isdigit():
+      msg += f"{aux_power_units} is not a valid input for auxiliary motive power units.\n "
+      error = True
+
+    hamster_booster = request.form['hamster_booster']
+    if not hamster_booster.isdigit():
+      msg += f"{hamster_booster} is not a valid input for hamster booster.\n "
+      error = True
+
+    tyres = (request.form['tyres']).strip("")
+
+    qty_tyres = request.form['qty_tyres']
+    if not qty_tyres.isdigit():
+      msg += f"{qty_tyres} is not a valid input for the number of tyres.\n "
+      error = True
+
+    armour = (request.form['armour']).strip("")
+
+    attack = (request.form['attack']).strip("")
+
+    qty_attacks = request.form['qty_attacks']
+    if not qty_wheels.isdigit():
+      msg += f"{qty_attacks} is not a valid input for the number of attacks.\n"
+      error = True
+
+    fireproof = ((request.form['fireproof']).strip("")).lower()
+    if fireproof != "false" and fireproof != "true":
+      msg += f"{fireproof} is not a valid input for whether or not the buggy is fireproof.\n"
+      error = True
+
+    insulated = ((request.form['insulated']).strip("")).lower()
+    if insulated != "false" and insulated != "true":
+      msg += f"{insulated} is not a valid input for whether or not the buggy is insulated.\n"
+      error = True
+
+    antibiotic = ((request.form['antibiotic']).strip("")).lower()
+    if antibiotic != "false" and antibiotic != "true":
+      msg += f"{antibiotic} is not a valid input for whether or not the buggy is antibiotic.\n"
+      error = True
+
+    banging = ((request.form['banging']).strip("")).lower()
+    if banging != "false" and banging != "true":
+      msg += f"{banging} is not a valid input for whether or not the buggy is banging.\n"
+      error = True
+  
+    algo = (request.form['algo']).strip("")
+    
+    if error == True:
+      return render_template("buggy-form.html", msg = msg)
+
+    try:          
+
+      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}, armour={armour}, attack={attack}, qty_attacks={qty_attacks}, fireproof={fireproof}, insulated={insulated}, antibiotic={antibiotic}, banging={banging}, algo={algo}"
 
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
@@ -64,7 +118,7 @@ def create_buggy():
         cur.execute("UPDATE buggies set qty_tyres=? WHERE id=?", (qty_tyres, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set armour=? WHERE id=?", (armour, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set attack=? WHERE id=?", (attack, DEFAULT_BUGGY_ID))
-        cur.execute("UPDATE buggies set qty_attack=? WHERE id=?", (qty_attack, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set qty_attacks=? WHERE id=?", (qty_attacks, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set fireproof=? WHERE id=?", (fireproof, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set insulated=? WHERE id=?", (insulated, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set antibiotic=? WHERE id=?", (antibiotic, DEFAULT_BUGGY_ID))

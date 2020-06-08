@@ -5,6 +5,9 @@
 {% block content %}
 
   <h1>Make buggy</h1>
+  <p>
+    {{ msg }}
+  </p>
   <form action="/new" method="post">
     <label for="qty_wheels">Number of wheels:</label>
     <input type="text" name="qty_wheels" />
@@ -45,8 +48,8 @@
     <label for="attack">Offensive capability:</label>
     <input type="text" name="attack"/>
     <br>
-    <label for="qty_attack">Number of attacks:</label>
-    <input type="text" name="qty_attack"/>
+    <label for="qty_attacks">Number of attacks:</label>
+    <input type="text" name="qty_attacks"/>
     <br>
     <label for="fireproof">Fireproof?:</label>
     <input type="text" name="fireproof"/>
