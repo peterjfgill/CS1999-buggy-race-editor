@@ -8,6 +8,7 @@ DEFAULT_BUGGY_ID = "1"
 BUGGY_RACE_SERVER_URL = "http://rhul.buggyrace.net"
 
 power_type_costs = {
+  "none"        : 0,
   "petrol"      : 4,
   "fusion"      : 400,
   "steam"       : 3,
@@ -103,14 +104,17 @@ def create_buggy():
 
     aux_power_type = (request.form['aux_power_type']).strip("")
 
-    aux_power_units = request.form['aux_power_units']
-    if aux_power_units.isdigit():
-      if int(aux_power_units) < 0:
-        msg += f"Please input a number greater than or equal to 0.\n "
-        error = True
+    if aux_power_type == "none":
+      aux_power_units = 0
     else:
-      msg += f"{aux_power_units} is not a valid input for the primary motive power units.\n "
-      error = True
+      aux_power_units = request.form['aux_power_units']
+      if aux_power_units.isdigit():
+        if int(aux_power_units) < 0:
+          msg += f"Please input a number greater than or equal to 0.\n "
+          error = True
+      else:
+        msg += f"{aux_power_units} is not a valid input for the primary motive power units.\n "
+        error = True
 
     hamster_booster = request.form['hamster_booster']
     if power_type == "hamster" or aux_power_type == "hamster":
