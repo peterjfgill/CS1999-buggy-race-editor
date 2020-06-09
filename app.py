@@ -19,7 +19,28 @@ power_type_costs = {
   "solar"       : 40,
   "wind"        : 20
 }
-
+tyre_costs = {
+  "knobbly"     : 15,
+  "slick"       : 10,
+  "steelband"   : 20,
+  "reactive"    : 40,
+  "maglev"      : 50
+}
+armour_costs = {
+  "none"        : 0,
+  "wood"        : 40,
+  "aluminium"   : 200,
+  "thinsteel"   : 100,
+  "thicksteel"  : 200,
+  "titanium"    : 290
+}
+attack_costs = {
+  "none"        : 0,
+  "spike"       : 5,
+  "flame"       : 20,
+  "charge"      : 28,
+  "biohazard"   : 30
+}
 
 
 #------------------------------------------------------------
@@ -36,18 +57,21 @@ def home():
 #------------------------------------------------------------
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
+
   con = sql.connect(DATABASE_FILE)
   con.row_factory = sql.Row
   cur = con.cursor()
   cur.execute("SELECT * FROM buggies")
   record = cur.fetchone();
+
   if request.method == 'GET':
     return render_template("buggy-form.html", buggy = record)
+    
   elif request.method == 'POST':
     msg=""
     error = False
     
-    #total_cost = request.form['total_cost']
+   
 
     qty_wheels = request.form['qty_wheels']
     if qty_wheels.isdigit():
@@ -76,7 +100,6 @@ def create_buggy():
     else:
       msg += f"{power_units} is not a valid input for the primary motive power units.\n "
       error = True
-    #total_cost += (power_type_costs[power_type] * power_units)
 
     aux_power_type = (request.form['aux_power_type']).strip("")
 
@@ -94,7 +117,9 @@ def create_buggy():
       if not hamster_booster.isdigit():
         msg += f"{hamster_booster} is not a valid input for hamster booster.\n "
         error = True
-
+    else:
+      hamster_booster = 0
+    
     tyres = (request.form['tyres']).strip("")
 
     qty_tyres = request.form['qty_tyres']
@@ -136,13 +161,23 @@ def create_buggy():
       error = True
   
     algo = (request.form['algo']).strip("")
-    
+
+    total_cost = 0
+
+    total_cost += (power_type_costs[power_type] * int(power_units))
+    total_cost += (power_type_costs[aux_power_type] * int(aux_power_units))
+    total_cost += (tyre_costs[tyres] * int(qty_tyres))
+    total_cost += (armour_costs[armour]) + (armour_costs[armour] * (int(qty_wheels)-4) * 0.1)
+    total_cost += (attack_costs[attack] * int(qty_attacks))
+
     if error == True:
       return render_template("buggy-form.html", msg = msg, buggy = record)
 
     try:          
+      
+      
 
-      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}, armour={armour}, attack={attack}, qty_attacks={qty_attacks}, fireproof={fireproof}, insulated={insulated}, antibiotic={antibiotic}, banging={banging}, algo={algo}"
+      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}, armour={armour}, attack={attack}, qty_attacks={qty_attacks}, fireproof={fireproof}, insulated={insulated}, antibiotic={antibiotic}, banging={banging}, algo={algo}, total_cost={total_cost}"
 
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
@@ -165,6 +200,7 @@ def create_buggy():
         cur.execute("UPDATE buggies set antibiotic=? WHERE id=?", (antibiotic, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set banging=? WHERE id=?", (banging, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set algo=? WHERE id=?", (algo, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set total_cost=? WHERE id=?", (total_cost, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except:

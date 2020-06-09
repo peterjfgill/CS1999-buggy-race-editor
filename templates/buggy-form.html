@@ -12,17 +12,18 @@
       input {display:table-cell}
       select {display:table-cell}
       h1 {text-align:center;}
+      a {display: table-cell; text-align:center;}
     </style>
   </head>
   <h1>Make buggy</h1>
-  <p>
+  <p style = "color:red">
     {{ msg }}
   </p>
 
   <form action="/new" method="post">
       <p>
         <label for="qty_wheels">Number of wheels:</label>
-        <input type="text" name="qty_wheels" value = "{{buggy ['qty_wheels']}}"/>
+        <input type="number" min=4 step=2 name="qty_wheels" value = "{{buggy ['qty_wheels']}}"/>
        </p>
       <p>
         <label for="flag_color">Primary flag color:</label>
@@ -31,7 +32,7 @@
        <p>  
         <label for="flag_pattern">Flag pattern:</label>
         <select name = "flag_pattern">
-          <option value = "plain" selected hidden>
+          <option value = "{{buggy['flag_pattern']}}" selected hidden>
             {{buggy['flag_pattern']}}
           <option>plain</option>
           <option>hstripe</option>
@@ -49,7 +50,7 @@
       <p>  
         <label for="power_type">Primary motive power:</label>
         <select name = "power_type">
-          <option value = "petrol" selected hidden>
+          <option value = "{{buggy['power_type']}}" selected hidden>
             {{buggy['power_type']}}
           <option>petrol</option>
           <option>fusion</option>
@@ -65,12 +66,12 @@
        </p>
       <p>  
         <label for="power_unit">Primary motive power units:</label>
-        <input type="text" name="power_units" value = "{{buggy ['power_units']}}"/>
+        <input type="number" min=0 name="power_units" value = "{{buggy ['power_units']}}"/>
        </p>
       <p>
         <label for="aux_power_type">Auxiliary motive power:</label>
         <select name = "aux_power_type">
-          <option value = "petrol" selected hidden>
+          <option value = "{{buggy['aux_power_type']}}" selected hidden>
             {{buggy['aux_power_type']}}
           <option>petrol</option>
           <option>fusion</option>
@@ -86,16 +87,16 @@
        </p>
       <p>
         <label for="aux_power_unit">Auxiliary motive power units:</label>
-        <input type="text" name="aux_power_units" value = "{{buggy ['aux_power_units']}}"/>
+        <input type="number" min=0 name="aux_power_units" value = "{{buggy ['aux_power_units']}}"/>
        </p>
       <p>
         <label for="hamster_booster">Hamster booster:</label>
-        <input type="text" name="hamster_booster" value = "{{buggy ['hamster_booster']}}"/>
+        <input type="number" min=0 name="hamster_booster" value = "{{buggy ['hamster_booster']}}"/>
        </p>
       <p>
         <label for="tyres">Type of tyres:</label>
         <select name = "tyres">
-          <option value = "knobbly" selected hidden>
+          <option value = "{{buggy['tyres']}}" selected hidden>
             {{buggy['tyres']}}
           <option>knobbly</option>
           <option>slick</option>
@@ -107,12 +108,12 @@
        </p>
       <p>
         <label for="qty_tyres">Number of tyres:</label>
-        <input type="text" name="qty_tyres" value = "{{buggy ['qty_tyres']}}"/>
+        <input type="number" min=4 step=2 name="qty_tyres" value = "{{buggy ['qty_tyres']}}"/>
        </p>
       <p>
         <label for="armour">Armour:</label>
         <select name = "armour">
-          <option value = "none" selected hidden>
+          <option value = "{{buggy['armour']}}" selected hidden>
             {{buggy['armour']}}
           <option>none</option>
           <option>wood</option>
@@ -125,7 +126,7 @@
       <p>
         <label for="attack">Offensive capability:</label>
         <select name = "attack">
-          <option value = "none" selected hidden>
+          <option value = "{{buggy['attack']}}" selected hidden>
             {{buggy['attack']}}
           <option>none</option>
           <option>spike</option>
@@ -136,12 +137,12 @@
        </p>
       <p>
         <label for="qty_attacks">Number of attacks:</label>
-        <input type="text" name="qty_attacks" value = "{{buggy ['qty_attacks']}}"/>
+        <input type="number" min=0 name="qty_attacks" value = "{{buggy ['qty_attacks']}}"/>
        </p>
       <p>
         <label for="fireproof">Fireproof?:</label>
         <select name = "fireproof">
-          <option value = false selected hidden>
+          <option value = "{{buggy['fireproof']}}" selected hidden>
             {{buggy['fireproof']}}
           <option>false</option>
           <option>true</option>
@@ -150,7 +151,7 @@
       <p>
         <label for="insulated">Insulated?:</label>
         <select name = "insulated">
-          <option value = false selected hidden>
+          <option value = "{{buggy['insulated']}}" selected hidden>
             {{buggy['insulated']}}
           <option>false</option>
           <option>true</option>
@@ -159,7 +160,7 @@
       <p>
         <label for="antibiotic">Antibiotic?:</label>
         <select name = "antibiotic">
-          <option value = false selected hidden>
+          <option value = "{{buggy['antibiotic']}}" selected hidden>
             {{buggy['antibiotic']}}
           <option>false</option>
           <option>true</option>
@@ -168,7 +169,7 @@
       <p>
         <label for="banging">Banging sound system?:</label>
         <select name = "banging">
-          <option value = false selected hidden>
+          <option value = "{{buggy['banging']}}" selected hidden>
             {{buggy['banging']}}
           <option>false</option>
           <option>true</option>
@@ -177,7 +178,7 @@
       <p>
         <label for="algo">Race computer algorithm:</label>
         <select name = "algo">
-          <option value = "steady" selected hidden>
+          <option value = "{{buggy['algo']}}" selected hidden>
             {{buggy['algo']}}
           <option>steady</option>
           <option>defensive</option>
@@ -191,10 +192,11 @@
         <label for="total_cost">Total cost:</label>
         {{buggy['total_cost']}}
        </p> 
-      <input type="submit" class="button">
+      <p>
+        <a href="/" class="button">home</a>
+        <input type="submit" class="button">
+       </p>
   </form>
   <br>
-  <p>
-    <a href="/" class="button">home</a>
-   </p>
+  
 {% endblock %}
