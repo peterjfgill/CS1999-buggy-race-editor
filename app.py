@@ -7,6 +7,20 @@ DEFAULT_BUGGY_ID = "1"
 
 BUGGY_RACE_SERVER_URL = "http://rhul.buggyrace.net"
 
+power_type_costs = {
+  "petrol"      : 4,
+  "fusion"      : 400,
+  "steam"       : 3,
+  "bio"         : 5,
+  "electric"    : 20,
+  "rocket"      : 16,
+  "hamster"     : 3,
+  "nuclear"     : 300,
+  "solar"       : 40,
+  "wind"        : 20
+}
+
+
 
 #------------------------------------------------------------
 # the index page
@@ -32,41 +46,63 @@ def create_buggy():
   elif request.method == 'POST':
     msg=""
     error = False
+    
+    #total_cost = request.form['total_cost']
 
     qty_wheels = request.form['qty_wheels']
-    if not qty_wheels.isdigit():
+    if qty_wheels.isdigit():
+      if (int(qty_wheels) % 2 != 0):
+        msg += f"{qty_wheels} is not a valid input for the number of wheels, please input an even number.\n"
+        error = True
+    else:
       msg += f"{qty_wheels} is not a valid input for the number of wheels.\n"
       error = True
     
     flag_color = (request.form['flag_color']).strip("")
-
     flag_color_secondary = (request.form['flag_color_secondary']).strip("")
-
     flag_pattern = (request.form['flag_pattern']).strip("")
+
+    if flag_color_secondary == flag_color and flag_pattern != "plain":
+      msg += f"The primary and secondary colors of the flag must be different unless the pattern is plain."
+      error = True
 
     power_type = (request.form['power_type']).strip("")
 
     power_units = request.form['power_units']
-    if not power_units.isdigit():
+    if power_units.isdigit():
+      if int(power_units) < 0:
+        msg += f"Please input a number greater than or equal to 0.\n "
+        error = True
+    else:
       msg += f"{power_units} is not a valid input for the primary motive power units.\n "
       error = True
+    #total_cost += (power_type_costs[power_type] * power_units)
 
     aux_power_type = (request.form['aux_power_type']).strip("")
 
     aux_power_units = request.form['aux_power_units']
-    if not aux_power_units.isdigit():
-      msg += f"{aux_power_units} is not a valid input for auxiliary motive power units.\n "
+    if aux_power_units.isdigit():
+      if int(aux_power_units) < 0:
+        msg += f"Please input a number greater than or equal to 0.\n "
+        error = True
+    else:
+      msg += f"{aux_power_units} is not a valid input for the primary motive power units.\n "
       error = True
 
     hamster_booster = request.form['hamster_booster']
-    if not hamster_booster.isdigit():
-      msg += f"{hamster_booster} is not a valid input for hamster booster.\n "
-      error = True
+    if power_type == "hamster" or aux_power_type == "hamster":
+      if not hamster_booster.isdigit():
+        msg += f"{hamster_booster} is not a valid input for hamster booster.\n "
+        error = True
 
     tyres = (request.form['tyres']).strip("")
 
     qty_tyres = request.form['qty_tyres']
-    if not qty_tyres.isdigit():
+    if qty_tyres.isdigit():
+      if int(qty_tyres) < int(qty_wheels):
+        msg += f"Quantity of tyres must be equal to or greater than the quantity of wheels.\n "
+        error = True
+    else:
       msg += f"{qty_tyres} is not a valid input for the number of tyres.\n "
       error = True
 
@@ -135,6 +171,11 @@ def create_buggy():
       con.rollback()
       msg = "error in update operation"
     finally:
+      con = sql.connect(DATABASE_FILE)
+      con.row_factory = sql.Row
+      cur = con.cursor()
+      cur.execute("SELECT * FROM buggies")
+      record = cur.fetchone(); 
       con.close()
       return render_template("updated.html", msg = msg, buggy = record)
 

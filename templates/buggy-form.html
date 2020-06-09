@@ -25,24 +25,43 @@
         <input type="text" name="qty_wheels" value = "{{buggy ['qty_wheels']}}"/>
        </p>
       <p>
-        <label for="flag_color">Flag color:</label>
+        <label for="flag_color">Primary flag color:</label>
         <input type="text" name="flag_color" value = "{{buggy ['flag_color']}}"/>
+       </p>
+       <p>  
+        <label for="flag_pattern">Flag pattern:</label>
+        <select name = "flag_pattern">
+          <option value = "plain" selected hidden>
+            {{buggy['flag_pattern']}}
+          <option>plain</option>
+          <option>hstripe</option>
+          <option>vstripe</option>
+          <option>dstripe</option>
+          <option>checker</option>
+          <option>spot</option>
+        </select>
        </p>
       <p>
         <label for="flag_color_secondary">Secondary flag color:</label>
         <input type="text" name="flag_color_secondary" value = "{{buggy ['flag_color_secondary']}}"/>
-        <select>
-        <option>plain</option>
-        <option>
-        </select>
        </p>
-      <p>  
-        <label for="flag_pattern">Flag pattern:</label>
-        <input type="text" name="flag_pattern" value = "{{buggy ['flag_pattern']}}"/>
-       </p>
+      
       <p>  
         <label for="power_type">Primary motive power:</label>
-        <input type="text" name="power_type" value = "{{buggy ['power_type']}}"/>
+        <select name = "power_type">
+          <option value = "petrol" selected hidden>
+            {{buggy['power_type']}}
+          <option>petrol</option>
+          <option>fusion</option>
+          <option>steam</option>
+          <option>bio</option>
+          <option>electric</option>
+          <option>rocket</option>
+          <option>hamster</option>
+          <option>thermo</option>
+          <option>solar</option>
+          <option>wind</option>
+        </select>
        </p>
       <p>  
         <label for="power_unit">Primary motive power units:</label>
@@ -50,7 +69,20 @@
        </p>
       <p>
         <label for="aux_power_type">Auxiliary motive power:</label>
-        <input type="text" name="aux_power_type" value = "{{buggy ['aux_power_type']}}"/>
+        <select name = "aux_power_type">
+          <option value = "petrol" selected hidden>
+            {{buggy['aux_power_type']}}
+          <option>petrol</option>
+          <option>fusion</option>
+          <option>steam</option>
+          <option>bio</option>
+          <option>electric</option>
+          <option>rocket</option>
+          <option>hamster</option>
+          <option>thermo</option>
+          <option>solar</option>
+          <option>wind</option>
+        </select>
        </p>
       <p>
         <label for="aux_power_unit">Auxiliary motive power units:</label>
@@ -62,7 +94,16 @@
        </p>
       <p>
         <label for="tyres">Type of tyres:</label>
-        <input type="text" name="tyres" value = "{{buggy ['tyres']}}"/>
+        <select name = "tyres">
+          <option value = "knobbly" selected hidden>
+            {{buggy['tyres']}}
+          <option>knobbly</option>
+          <option>slick</option>
+          <option>steelband</option>
+          <option>dstripe</option>
+          <option>reactive</option>
+          <option>maglev</option>
+        </select>
        </p>
       <p>
         <label for="qty_tyres">Number of tyres:</label>
@@ -70,11 +111,28 @@
        </p>
       <p>
         <label for="armour">Armour:</label>
-        <input type="text" name="armour" value = "{{buggy ['armour']}}"/>
+        <select name = "armour">
+          <option value = "none" selected hidden>
+            {{buggy['armour']}}
+          <option>none</option>
+          <option>wood</option>
+          <option>aluminium</option>
+          <option>thinsteel</option>
+          <option>thicksteel</option>
+          <option>titanium</option>
+        </select>
        </p>
       <p>
         <label for="attack">Offensive capability:</label>
-        <input type="text" name="attack" value = "{{buggy ['attack']}}"/>
+        <select name = "attack">
+          <option value = "none" selected hidden>
+            {{buggy['attack']}}
+          <option>none</option>
+          <option>spike</option>
+          <option>flame</option>
+          <option>charge</option>
+          <option>biohazard</option>
+        </select>
        </p>
       <p>
         <label for="qty_attacks">Number of attacks:</label>
@@ -82,24 +140,57 @@
        </p>
       <p>
         <label for="fireproof">Fireproof?:</label>
-        <input type="text" name="fireproof" value = "{{buggy ['fireproof']}}"/>
+        <select name = "fireproof">
+          <option value = false selected hidden>
+            {{buggy['fireproof']}}
+          <option>false</option>
+          <option>true</option>
+        </select>
        </p>
       <p>
         <label for="insulated">Insulated?:</label>
-        <input type="text" name="insulated" value = "{{buggy ['insulated']}}"/>
+        <select name = "insulated">
+          <option value = false selected hidden>
+            {{buggy['insulated']}}
+          <option>false</option>
+          <option>true</option>
+        </select>
        </p>
       <p>
         <label for="antibiotic">Antibiotic?:</label>
-        <input type="text" name="antibiotic" value = "{{buggy ['antibiotic']}}"/>
+        <select name = "antibiotic">
+          <option value = false selected hidden>
+            {{buggy['antibiotic']}}
+          <option>false</option>
+          <option>true</option>
+        </select>
        </p>
       <p>
         <label for="banging">Banging sound system?:</label>
-        <input type="text" name="banging" value = "{{buggy ['banging']}}"/>
+        <select name = "banging">
+          <option value = false selected hidden>
+            {{buggy['banging']}}
+          <option>false</option>
+          <option>true</option>
+        </select>
        </p>
       <p>
         <label for="algo">Race computer algorithm:</label>
-        <input type="text" name="algo" value = "{{buggy ['algo']}}"/>
+        <select name = "algo">
+          <option value = "steady" selected hidden>
+            {{buggy['algo']}}
+          <option>steady</option>
+          <option>defensive</option>
+          <option>offensive</option>
+          <option>titfortat</option>
+          <option>random</option>
+          <option>buggy</option>
+        </select>
        </p>
+      <P>
+        <label for="total_cost">Total cost:</label>
+        {{buggy['total_cost']}}
+       </p> 
       <input type="submit" class="button">
   </form>
   <br>
