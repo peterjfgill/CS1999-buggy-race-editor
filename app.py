@@ -71,7 +71,7 @@ def create_buggy():
   elif request.method == 'POST':
     msg=""
     error = False
-    
+    total_cost = 0
    
 
     qty_wheels = request.form['qty_wheels']
@@ -148,31 +148,46 @@ def create_buggy():
     if fireproof != "false" and fireproof != "true":
       msg += f"{fireproof} is not a valid input for whether or not the buggy is fireproof.\n"
       error = True
+    if fireproof == "true":
+      total_cost += 70
 
     insulated = ((request.form['insulated']).strip("")).lower()
     if insulated != "false" and insulated != "true":
       msg += f"{insulated} is not a valid input for whether or not the buggy is insulated.\n"
       error = True
+    if insulated == "true":
+      total_cost += 100
 
     antibiotic = ((request.form['antibiotic']).strip("")).lower()
     if antibiotic != "false" and antibiotic != "true":
       msg += f"{antibiotic} is not a valid input for whether or not the buggy is antibiotic.\n"
       error = True
+    if antibiotic == "true":
+      total_cost += 90
 
     banging = ((request.form['banging']).strip("")).lower()
     if banging != "false" and banging != "true":
       msg += f"{banging} is not a valid input for whether or not the buggy is banging.\n"
       error = True
+    if banging == "true":
+      total_cost += 42
   
     algo = (request.form['algo']).strip("")
 
-    total_cost = 0
+    buggy_cost_limit = request.form.get('buggy_cost_limit', 400)
 
     total_cost += (power_type_costs[power_type] * int(power_units))
     total_cost += (power_type_costs[aux_power_type] * int(aux_power_units))
     total_cost += (tyre_costs[tyres] * int(qty_tyres))
     total_cost += (armour_costs[armour]) + (armour_costs[armour] * (int(qty_wheels)-4) * 0.1)
     total_cost += (attack_costs[attack] * int(qty_attacks))
+    total_cost += (int(hamster_booster)*5)
+
+
+
+    if total_cost > buggy_cost_limit:
+      msg += f"Please adjust your buggy until the total cost is less than {buggy_cost_limit}.\n"
+      error == True
 
     if error == True:
       return render_template("buggy-form.html", msg = msg, buggy = record)
@@ -181,7 +196,7 @@ def create_buggy():
       
       
 
-      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}, armour={armour}, attack={attack}, qty_attacks={qty_attacks}, fireproof={fireproof}, insulated={insulated}, antibiotic={antibiotic}, banging={banging}, algo={algo}, total_cost={total_cost}"
+      msg = f"qty_wheels={qty_wheels}, flag_color={flag_color} , flag_color_secondary={flag_color_secondary}, flag_pattern={flag_pattern}, power_type={power_type}, power_units={power_units}, aux_power_type={aux_power_type}, aux_power_units={aux_power_units}, hamster_booster={hamster_booster}, tyres={tyres}, qty_tyres={qty_tyres}, armour={armour}, attack={attack}, qty_attacks={qty_attacks}, fireproof={fireproof}, insulated={insulated}, antibiotic={antibiotic}, banging={banging}, algo={algo}, total_cost={total_cost}, buggy_cost_limit={buggy_cost_limit}"
 
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
@@ -205,6 +220,7 @@ def create_buggy():
         cur.execute("UPDATE buggies set banging=? WHERE id=?", (banging, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set algo=? WHERE id=?", (algo, DEFAULT_BUGGY_ID))
         cur.execute("UPDATE buggies set total_cost=? WHERE id=?", (total_cost, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set buggy_cost_limit=? WHERE id=?", (buggy_cost_limit, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except:

@@ -45,7 +45,8 @@ con.execute("""
     antibiotic            VARCHAR(5) DEFAULT "false",
     banging               VARCHAR(5) DEFAULT "false",
     algo                  VARCHAR(20) DEFAULT "steady",
-    total_cost            INTEGER DEFAULT 60
+    total_cost            INTEGER DEFAULT 60,
+    buggy_cost_limit      INTEGER DEFAULT 300
   )
 
 """)
