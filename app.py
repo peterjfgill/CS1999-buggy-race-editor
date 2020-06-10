@@ -174,7 +174,7 @@ def create_buggy():
   
     algo = (request.form['algo']).strip("")
 
-    buggy_cost_limit = request.form.get('buggy_cost_limit', 400)
+    buggy_cost_limit = request.form['buggy_cost_limit']
 
     total_cost += (power_type_costs[power_type] * int(power_units))
     total_cost += (power_type_costs[aux_power_type] * int(aux_power_units))
